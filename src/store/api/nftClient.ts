@@ -9,11 +9,14 @@ export function getNfts(
   startInclusive: string,
   endExclusive: string
 ): Promise<AxiosResponse<Nft[]>> {
+  const myFilterObject = { collection: '' };
   let dynamicPart = '';
   if (nft_filter_string || startInclusive || endExclusive) {
     dynamicPart = `?`;
     if (nft_filter_string) {
-      dynamicPart += `nft_filter_string=${nft_filter_string}`;
+      myFilterObject.collection = nft_filter_string;
+      const nftFilterString = JSON.stringify(myFilterObject);
+      dynamicPart += `nft_filter_string=${nftFilterString}`;
     }
     if (startInclusive) {
       dynamicPart += `&startInclusive=${startInclusive}`;

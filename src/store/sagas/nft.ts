@@ -13,7 +13,7 @@ function* getNftsSaga(action: PayloadAction<GetNftRequestedActionPayloadType>) {
   try {
     const payload = yield call(
       getNfts,
-      action.payload.nftType || '',
+      action.payload.nftFilterString || '',
       action.payload.startInclusive || '',
       action.payload.endExclusive || ''
     );

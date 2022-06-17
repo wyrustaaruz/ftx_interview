@@ -9,7 +9,7 @@ type ResponseDataType = {
 };
 
 export type GetNftRequestedActionPayloadType = {
-  nftType: string;
+  nftFilterString: string;
   startInclusive: string;
   endExclusive: string;
 };

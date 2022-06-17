@@ -7,8 +7,9 @@ import {
   selectPendingData,
 } from 'store/selectors/collection';
 import { getCollectionsRequestedAction } from 'store/actions/collection';
-import type { PaginationProps } from 'antd';
 import { history } from 'store';
+import { Collection } from 'store/reducers/collection/types';
+import type { PaginationProps } from 'antd';
 
 const CollectionsView: React.FC = () => {
   const dispatch = useDispatch();
@@ -46,12 +47,12 @@ const CollectionsView: React.FC = () => {
     );
   });
 
-  const renderListItem = useCallback((collection) => {
+  const renderListItem = useCallback((collection: Collection) => {
     return (
       <List.Item>
         <div
           onClick={() => {
-            history.push('nft/123');
+            history.push(`nft/${collection.group_id}`);
           }}
           style={{
             display: 'inline-block',
@@ -72,7 +73,7 @@ const CollectionsView: React.FC = () => {
                 width: '100%',
                 backgroundImage: `url(${
                   collection.collectionDict?.bannerImageUrl ||
-                  collection.first_collection?.imageUrl
+                  collection.first_nft?.imageUrl
                 })`,
                 backgroundPosition: 'center',
                 borderRadius: 20,
@@ -88,7 +89,6 @@ const CollectionsView: React.FC = () => {
               width: '100%',
               flexDirection: 'column',
               padding: '10px',
-              overflow: 'hidden',
             }}
           >
             <div
@@ -174,6 +174,9 @@ const CollectionsView: React.FC = () => {
               justifyContent: 'center',
             }}
           >
+            {/*
+              TODO: total sayfa sayısı hesaplanıp buraya girilecek.
+              */}
             <Pagination current={current} onChange={onChangePage} total={50} />
           </div>
         </div>
