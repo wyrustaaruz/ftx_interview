@@ -25,6 +25,8 @@ const collectionSlice = createSlice({
       action: PayloadAction<GetCollectionRequestedActionPayloadType>
     ) => {
       state.isPending = true;
+      state.data = [];
+      state.count = 0;
     },
     getCollectionsSucceededAction: (
       state,

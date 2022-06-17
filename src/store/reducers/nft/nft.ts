@@ -25,6 +25,8 @@ const nftSlice = createSlice({
       action: PayloadAction<GetNftRequestedActionPayloadType>
     ) => {
       state.isPending = true;
+      state.data = [];
+      state.total = 0;
     },
     getNftsSucceededAction: (
       state,
