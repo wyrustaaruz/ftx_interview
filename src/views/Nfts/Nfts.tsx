@@ -70,7 +70,7 @@ const NftsView: React.FC = () => {
         day: 'numeric',
       });
       return (
-        <List.Item>
+        <List.Item key={nft.id}>
           <div
             onClick={() => {
               setSelectedNft(nft);
@@ -119,6 +119,9 @@ const NftsView: React.FC = () => {
               <p className="flex-1 text-center justify-center">
                 {formatMoney(nft.offerPrice)} {nft.quoteCurrency}
               </p>
+              <p className="flex-1 text-center justify-center">
+                Status: {nft.status}
+              </p>
               <p className="flex-1 text-center justify-center">{dateString}</p>
             </div>
           </div>
@@ -138,6 +141,7 @@ const NftsView: React.FC = () => {
           Back
         </h2>
         <h1 className="mb-0 py-5">{nfts[0]?.collection || 'Nft'}</h1>
+        <p className="mb-0 py-5">{nfts[0]?.description || ''}</p>
         <div className="m-10">
           <List
             grid={{
