@@ -16,7 +16,7 @@ const Header: React.FC<Props> = () => {
               className="text-xl font-bold flex items-center lg:ml-2.5"
             >
               <span className="self-center whitespace-nowrap mx-2 text-black">
-                FTX
+                FTX - NFT
               </span>
             </a>
           </div>

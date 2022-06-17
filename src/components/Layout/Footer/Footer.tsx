@@ -5,9 +5,9 @@ const Footer: React.FC = () => (
     <p className="text-center text-sm text-gray-500">
       &copy; {new Date().getFullYear()}{' '}
       <a href="#" className="hover:underline" target="_blank" rel="noreferrer">
-        FTX
+        FTX - NFT
       </a>
-      . All rights reserved.
+      . Made with 🖤 by Hasan Rıza.
     </p>
   </footer>
 );
