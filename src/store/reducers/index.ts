@@ -1,0 +1,1 @@
+export { collectionReducer } from './collection';
