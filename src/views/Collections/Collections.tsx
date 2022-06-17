@@ -1,7 +1,7 @@
 import React, { useState, useCallback, Suspense, useEffect } from 'react';
 import { useMount } from 'react-use';
 import { useDispatch, useSelector } from 'react-redux';
-import { List, Pagination } from 'antd';
+import { List, Pagination, Tabs } from 'antd';
 import {
   selectCollectionsData,
   selectPendingData,
@@ -14,8 +14,9 @@ import type { PaginationProps } from 'antd';
 
 const CollectionsView: React.FC = () => {
   const dispatch = useDispatch();
-  const [current, setCurrent] = useState(1);
-  const [startInclusive, setStartInclusive] = useState(0);
+  const [current, setCurrent] = useState<number>(1);
+  const [startInclusive, setStartInclusive] = useState<number>(0);
+  const [selectedTab, setSelectedTab] = useState<string>('all');
   const collections = useSelector(selectCollectionsData);
   const isPending = useSelector(selectPendingData);
   const total = useSelector(selectCollectionTotalCount);
@@ -28,17 +29,17 @@ const CollectionsView: React.FC = () => {
   useEffect(() => {
     dispatch(
       getCollectionsRequestedAction({
-        collectionType: 'ftx',
+        collectionType: selectedTab,
         startInclusive: startInclusive.toString(),
         endExclusive: (startInclusive + itemSize).toString(),
       })
     );
-  }, [dispatch, startInclusive]);
+  }, [dispatch, startInclusive, selectedTab]);
 
   useMount(() => {
     dispatch(
       getCollectionsRequestedAction({
-        collectionType: 'ftx',
+        collectionType: selectedTab,
         startInclusive: '0',
         endExclusive: itemSize.toString(),
       })
@@ -145,45 +146,67 @@ const CollectionsView: React.FC = () => {
     );
   }, []);
 
+  const tabsRender = useCallback(() => {
+    return (
+      <div className="m-10">
+        <List
+          grid={{
+            gutter: 16,
+            xs: 1,
+            sm: 2,
+            md: 4,
+            lg: 4,
+            xl: 6,
+            xxl: 3,
+          }}
+          loading={isPending}
+          dataSource={collections}
+          renderItem={(collection) => renderListItem(collection)}
+        />
+        <div
+          style={{
+            display: 'flex',
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {total > itemSize && (
+            <Pagination
+              current={current}
+              onChange={onChangePage}
+              showQuickJumper={false}
+              showSizeChanger={false}
+              pageSize={itemSize}
+              total={total}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }, [collections, current, isPending, onChangePage, renderListItem, total]);
+
   return (
     <div>
       <div className="card">
         <h1 className="mb-0 py-5">Collection</h1>
-        <div className="m-10">
-          <List
-            grid={{
-              gutter: 16,
-              xs: 1,
-              sm: 2,
-              md: 4,
-              lg: 4,
-              xl: 6,
-              xxl: 3,
-            }}
-            loading={isPending}
-            dataSource={collections}
-            renderItem={(collection) => renderListItem(collection)}
-          />
-          <div
-            style={{
-              display: 'flex',
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {total > itemSize && (
-              <Pagination
-                current={current}
-                onChange={onChangePage}
-                showQuickJumper={false}
-                showSizeChanger={false}
-                pageSize={itemSize}
-                total={total}
-              />
-            )}
-          </div>
-        </div>
+        <Tabs
+          onChange={(value: string) => setSelectedTab(value)}
+          defaultActiveKey={selectedTab}
+        >
+          <Tabs.TabPane tab="All" key="all">
+            {tabsRender()}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="FTX" key="ftx">
+            {tabsRender()}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="SOLANA" key="sol">
+            {tabsRender()}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="ETHEREUM" key="eth">
+            {tabsRender()}
+          </Tabs.TabPane>
+        </Tabs>
       </div>
     </div>
   );
