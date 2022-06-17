@@ -14,6 +14,7 @@ import NftModal from './NftModal';
 import { Nft } from 'store/reducers/nft/types';
 import type { PaginationProps } from 'antd';
 import { formatMoney } from 'utils/formatMoney';
+import ProgressiveImg from 'components/Common/ProgressiveImg';
 
 const NftsView: React.FC = () => {
   const dispatch = useDispatch();
@@ -99,11 +100,7 @@ const NftsView: React.FC = () => {
                 justifyContent: 'center',
               }}
             >
-              <img
-                src={nft.imageUrl}
-                alt={nft.imageUrl}
-                className="h-full w-auto"
-              />
+              <ProgressiveImg src={nft.imageUrl} className="h-full w-auto" />
             </div>
             <div
               style={{

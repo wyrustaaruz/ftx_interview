@@ -68,3 +68,13 @@ button {
 .ant-modal-confirm-btns {
   display: flex;
 }
+
+.loading-image {
+  filter: blur(10px);
+  clip-path: inset(0);
+}
+
+.loaded-image {
+  filter: blur(0px);
+  transition: filter 0.5s linear;
+}

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Suspense, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useMount } from 'react-use';
 import { useDispatch, useSelector } from 'react-redux';
 import { List, Pagination, Tabs } from 'antd';
@@ -11,6 +11,7 @@ import { getCollectionsRequestedAction } from 'store/actions/collection';
 import { history } from 'store';
 import { Collection } from 'store/reducers/collection/types';
 import type { PaginationProps } from 'antd';
+import ProgressiveImg from 'components/Common/ProgressiveImg';
 
 const CollectionsView: React.FC = () => {
   const dispatch = useDispatch();
@@ -53,32 +54,21 @@ const CollectionsView: React.FC = () => {
           onClick={() => {
             history.push(`nft/${collection.group_id}`);
           }}
-          style={{
-            display: 'inline-block',
-            border: '1px solid light-gray',
-            cursor: 'pointer',
-            width: '100%',
-            borderWidth: 1,
-            borderRadius: 20,
-          }}
-          className="hover:bg-gray-100"
+          className="hover:bg-gray-100 cursor-pointer	 inline-block w-full border border-gray-300 rounded-lg"
         >
-          <Suspense fallback={<div>Loading</div>}>
-            <div
-              style={{
-                display: 'flex',
-                flex: 1,
-                height: 200,
-                width: '100%',
-                backgroundImage: `url(${
-                  collection.collectionDict?.bannerImageUrl ||
-                  collection.first_nft?.imageUrl
-                })`,
-                backgroundPosition: 'center',
-                borderRadius: 20,
-              }}
+          <div className="flex flex-1 w-full rounded-t-lg border-b border-gray-500">
+            <ProgressiveImg
+              src={
+                collection.collectionDict?.bannerImageUrl ||
+                collection.first_nft?.imageUrl
+              }
+              alt={
+                collection.collectionDict?.bannerImageUrl ||
+                collection.first_nft?.name
+              }
+              className="h-60 w-full object-cover rounded-t-lg"
             />
-          </Suspense>
+          </div>
           <div
             style={{
               display: 'flex',
@@ -98,16 +88,9 @@ const CollectionsView: React.FC = () => {
               }}
             >
               {collection.collectionDict?.avatarImageUrl ? (
-                <img
+                <ProgressiveImg
                   src={collection.collectionDict?.avatarImageUrl}
-                  alt={collection.collectionDict?.name}
-                  style={{
-                    marginTop: -40,
-                    borderWidth: 1,
-                    borderColor: 'black',
-                    borderRadius: '50%',
-                  }}
-                  className="w-20 h-20"
+                  className="w-20 h-20 rounded-full -mt-12 "
                 />
               ) : (
                 <p
