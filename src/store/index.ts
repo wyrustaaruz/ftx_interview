@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga';
 import { createReduxHistoryContext } from 'redux-first-history';
 import { createBrowserHistory } from 'history';
 
-import { collectionReducer } from './reducers';
+import { collectionReducer, nftReducer } from './reducers';
 import { rootSaga } from './sagas';
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
@@ -22,6 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 export const store = configureStore({
   reducer: combineReducers({
     collection: collectionReducer,
+    nft: nftReducer,
     router: routerReducer,
   }),
   middleware: (getDefaultMiddleware) =>
