@@ -8,10 +8,10 @@ import {
 } from 'store/selectors/collection';
 import { getCollectionsRequestedAction } from 'store/actions/collection';
 import type { PaginationProps } from 'antd';
+import { history } from 'store';
 
 const CollectionsView: React.FC = () => {
   const dispatch = useDispatch();
-
   const [current, setCurrent] = useState(1);
   const [startInclusive, setStartInclusive] = useState(0);
   const collections = useSelector(selectCollectionsData);
@@ -50,9 +50,13 @@ const CollectionsView: React.FC = () => {
     return (
       <List.Item>
         <div
+          onClick={() => {
+            history.push('nft/123');
+          }}
           style={{
             display: 'inline-block',
             border: '1px solid light-gray',
+            cursor: 'pointer',
             width: '100%',
             borderWidth: 1,
             borderRadius: 20,
@@ -84,6 +88,7 @@ const CollectionsView: React.FC = () => {
               width: '100%',
               flexDirection: 'column',
               padding: '10px',
+              overflow: 'hidden',
             }}
           >
             <div
