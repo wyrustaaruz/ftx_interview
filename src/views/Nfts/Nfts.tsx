@@ -166,7 +166,7 @@ const NftsView: React.FC = () => {
               justifyContent: 'center',
             }}
           >
-            {total > 0 && (
+            {total > itemSize && (
               <Pagination
                 current={current}
                 onChange={onChangePage}
