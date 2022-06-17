@@ -24,7 +24,6 @@ const NftsView: React.FC = () => {
   const nfts = useSelector(selectNftsData);
   const isPending = useSelector(selectPendingData);
   const total = useSelector(selectNftTotalCount);
-  const pageSize = Math.ceil(total / 9);
   const { collectionId } = useParams();
   const itemSize = 9;
 
@@ -38,13 +37,8 @@ const NftsView: React.FC = () => {
   }, [setIsModalVisible, setSelectedNft]);
 
   const onChangePage: PaginationProps['onChange'] = useCallback((page) => {
-    console.log('page', page);
     setCurrent(page);
-    if (page === 1) {
-      setStartInclusive(0);
-    } else {
-      setStartInclusive(page * itemSize);
-    }
+    setStartInclusive((page - 1) * itemSize);
   }, []);
 
   useEffect(() => {
@@ -172,13 +166,14 @@ const NftsView: React.FC = () => {
               justifyContent: 'center',
             }}
           >
-            {pageSize > 0 && (
+            {total > 0 && (
               <Pagination
                 current={current}
                 onChange={onChangePage}
                 showQuickJumper={false}
                 showSizeChanger={false}
-                total={pageSize}
+                pageSize={itemSize}
+                total={total}
               />
             )}
           </div>

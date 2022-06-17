@@ -19,15 +19,10 @@ const CollectionsView: React.FC = () => {
   const collections = useSelector(selectCollectionsData);
   const isPending = useSelector(selectPendingData);
   const total = useSelector(selectCollectionTotalCount);
-  const pageSize = Math.ceil(total / 9);
   const itemSize = 9;
   const onChangePage: PaginationProps['onChange'] = useCallback((page) => {
     setCurrent(page);
-    if (page === 1) {
-      setStartInclusive(0);
-    } else {
-      setStartInclusive(page * itemSize);
-    }
+    setStartInclusive((page - 1) * itemSize);
   }, []);
 
   useEffect(() => {
@@ -177,11 +172,14 @@ const CollectionsView: React.FC = () => {
               justifyContent: 'center',
             }}
           >
-            {pageSize > 0 && (
+            {total > 0 && (
               <Pagination
                 current={current}
                 onChange={onChangePage}
-                total={pageSize}
+                showQuickJumper={false}
+                showSizeChanger={false}
+                pageSize={itemSize}
+                total={total}
               />
             )}
           </div>
