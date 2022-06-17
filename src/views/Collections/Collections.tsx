@@ -5,6 +5,7 @@ import { List, Pagination } from 'antd';
 import {
   selectCollectionsData,
   selectPendingData,
+  selectCollectionTotalCount,
 } from 'store/selectors/collection';
 import { getCollectionsRequestedAction } from 'store/actions/collection';
 import { history } from 'store';
@@ -17,6 +18,8 @@ const CollectionsView: React.FC = () => {
   const [startInclusive, setStartInclusive] = useState(0);
   const collections = useSelector(selectCollectionsData);
   const isPending = useSelector(selectPendingData);
+  const total = useSelector(selectCollectionTotalCount);
+  const pageSize = Math.ceil(total / 9);
   const itemSize = 9;
   const onChangePage: PaginationProps['onChange'] = useCallback((page) => {
     setCurrent(page);
@@ -174,10 +177,13 @@ const CollectionsView: React.FC = () => {
               justifyContent: 'center',
             }}
           >
-            {/*
-              TODO: total sayfa sayısı hesaplanıp buraya girilecek.
-              */}
-            <Pagination current={current} onChange={onChangePage} total={50} />
+            {pageSize > 0 && (
+              <Pagination
+                current={current}
+                onChange={onChangePage}
+                total={pageSize}
+              />
+            )}
           </div>
         </div>
       </div>

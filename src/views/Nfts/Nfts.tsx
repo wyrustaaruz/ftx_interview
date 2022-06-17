@@ -3,7 +3,11 @@ import { useMount } from 'react-use';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { List, Pagination, Modal } from 'antd';
-import { selectNftsData, selectPendingData } from 'store/selectors/nft';
+import {
+  selectNftsData,
+  selectPendingData,
+  selectNftTotalCount,
+} from 'store/selectors/nft';
 import { getNftsRequestedAction } from 'store/actions/nft';
 import { history } from 'store';
 import NftModal from './NftModal';
@@ -19,6 +23,8 @@ const NftsView: React.FC = () => {
   const [startInclusive, setStartInclusive] = useState(0);
   const nfts = useSelector(selectNftsData);
   const isPending = useSelector(selectPendingData);
+  const total = useSelector(selectNftTotalCount);
+  const pageSize = Math.ceil(total / 9);
   const { collectionId } = useParams();
   const itemSize = 9;
 
@@ -32,6 +38,7 @@ const NftsView: React.FC = () => {
   }, [setIsModalVisible, setSelectedNft]);
 
   const onChangePage: PaginationProps['onChange'] = useCallback((page) => {
+    console.log('page', page);
     setCurrent(page);
     if (page === 1) {
       setStartInclusive(0);
@@ -117,7 +124,7 @@ const NftsView: React.FC = () => {
               <p className="flex-1 text-center justify-center">{nft.name}</p>
               <p className="flex-1 text-center justify-center">Price:</p>
               <p className="flex-1 text-center justify-center">
-                {formatMoney(nft.offerPrice)} {nft.quoteCurrency}
+                {formatMoney(nft.offerPrice || 0)} {nft.quoteCurrency}
               </p>
               <p className="flex-1 text-center justify-center">
                 Status: {nft.status}
@@ -165,10 +172,15 @@ const NftsView: React.FC = () => {
               justifyContent: 'center',
             }}
           >
-            {/*
-              TODO: total sayfa sayısı hesaplanıp buraya girilecek.
-              */}
-            <Pagination current={current} onChange={onChangePage} total={50} />
+            {pageSize > 0 && (
+              <Pagination
+                current={current}
+                onChange={onChangePage}
+                showQuickJumper={false}
+                showSizeChanger={false}
+                total={pageSize}
+              />
+            )}
           </div>
         </div>
       </div>

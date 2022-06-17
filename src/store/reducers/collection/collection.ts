@@ -13,6 +13,7 @@ const collectionReducerInitialState: CollectionStateType = {
   isPending: false,
   data: [],
   error: undefined,
+  count: 0,
 };
 
 const collectionSlice = createSlice({
@@ -31,6 +32,7 @@ const collectionSlice = createSlice({
     ) => {
       state.isPending = false;
       state.data = action.payload.data.result.collections;
+      state.count = action.payload.data.result.count;
     },
     getCollectionsFailedAction: (
       state,

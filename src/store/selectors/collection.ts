@@ -16,3 +16,10 @@ export const selectCollectionsData = createSelector(
   selectCollection,
   (collections): Collection[] => collections.data
 );
+
+export const selectCollectionTotalCount = (state: RootState): number =>
+  state.collection.count;
+export const selectCollectionTotalCountData = createSelector(
+  selectCollectionTotalCount,
+  (count): number => count
+);

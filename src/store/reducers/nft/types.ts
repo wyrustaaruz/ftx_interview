@@ -57,6 +57,7 @@ export type AuctionType = {
 
 export type NftStateType = {
   data: Nft[];
-  error?: string;
   isPending: boolean;
+  total: number;
+  error?: string;
 };

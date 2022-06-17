@@ -96,6 +96,7 @@ export type IssuerType = {
 
 export type CollectionStateType = {
   data: Collection[];
-  error?: string;
   isPending: boolean;
+  count: number;
+  error?: string;
 };

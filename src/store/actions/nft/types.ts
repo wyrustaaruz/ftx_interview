@@ -3,6 +3,7 @@ export type GetNftsRequestedActionPayloadType = Record<string, string>;
 
 type NftsType = {
   nfts: Nft[];
+  total: number;
 };
 type ResponseDataType = {
   result: NftsType;

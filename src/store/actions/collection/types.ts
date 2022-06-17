@@ -3,6 +3,7 @@ export type GetCollectionsRequestedActionPayloadType = Record<string, string>;
 
 type CollectionsType = {
   collections: Collection[];
+  count: number;
 };
 type ResponseDataType = {
   result: CollectionsType;

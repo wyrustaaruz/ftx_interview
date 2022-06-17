@@ -14,3 +14,10 @@ export const selectNftsData = createSelector(
   selectNft,
   (nfts): Nft[] => nfts.data
 );
+
+export const selectNftTotalCount = (state: RootState): number =>
+  state.nft.total;
+export const selectNftsTotalCountData = createSelector(
+  selectNftTotalCount,
+  (total): number => total
+);

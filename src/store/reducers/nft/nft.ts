@@ -13,6 +13,7 @@ const nftReducerInitialState: NftStateType = {
   isPending: false,
   data: [],
   error: undefined,
+  total: 0,
 };
 
 const nftSlice = createSlice({
@@ -31,6 +32,7 @@ const nftSlice = createSlice({
     ) => {
       state.isPending = false;
       state.data = action.payload.data.result.nfts;
+      state.total = action.payload.data.result.total;
     },
     getNftsFailedAction: (
       state,
